@@ -1,9 +1,12 @@
 package com.example.proyek_management.controller;
 
 import com.example.proyek_management.exception.ResourceNotFoundException;
+import com.example.proyek_management.model.Lokasi;
 import com.example.proyek_management.model.Proyek;
 import com.example.proyek_management.repository.ProyekLokasiRepository;
 import com.example.proyek_management.repository.ProyekRepository;
+import com.example.proyek_management.service.LokasiService;
+import com.example.proyek_management.service.ProyekService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +23,8 @@ public class ProyekController {
     private ProyekRepository proyekRepository;
 
     @Autowired
+    private ProyekService proyekService;
+    @Autowired
     private ProyekLokasiRepository proyekLokasiRepository;
 
     @PostMapping
@@ -32,6 +37,10 @@ public class ProyekController {
         return proyekRepository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Proyek getProyekById(@PathVariable Long id) {
+        return proyekService.getProyekById(id);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<Proyek> updateProyek(@PathVariable Long id, @RequestBody Proyek proyekDetails) {
         Proyek proyek = proyekRepository.findById(id)

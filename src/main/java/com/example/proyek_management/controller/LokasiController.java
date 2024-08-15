@@ -3,6 +3,7 @@ package com.example.proyek_management.controller;
 import com.example.proyek_management.exception.ResourceNotFoundException;
 import com.example.proyek_management.model.Lokasi;
 import com.example.proyek_management.repository.LokasiRepository;
+import com.example.proyek_management.service.LokasiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,8 @@ public class LokasiController {
     @Autowired
     private LokasiRepository lokasiRepository;
 
+    @Autowired
+    private LokasiService lokasiService;
     @PostMapping
     public Lokasi createLokasi(@RequestBody Lokasi lokasi) {
         return lokasiRepository.save(lokasi);
@@ -26,6 +29,12 @@ public class LokasiController {
     @GetMapping
     public List<Lokasi> getAllLokasi() {
         return lokasiRepository.findAll();
+    }
+
+    // Endpoint untuk mendapatkan lokasi berdasarkan ID
+    @GetMapping("/{id}")
+    public Lokasi getLokasiById(@PathVariable Long id) {
+        return lokasiService.getLokasiById(id);
     }
 
     @PutMapping("/{id}")
